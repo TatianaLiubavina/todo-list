@@ -4,8 +4,13 @@
 
 ## Структура
 
-- `server/main.py` — FastAPI-сервер с CRUD для задач
-- `server/tasks.json` — JSON-файл с данными (вместо базы данных)
+- `server/main.py` — точка входа FastAPI + включение роутеров
+- `server/rest/*` — REST-эндпоинты (auth, tasks)
+- `server/domain/*` — модели (Pydantic) для входных данных/ответов
+- `server/db/*` — репозитории для работы с "БД" (JSON-файлы)
+- `server/tasks.json` — задачи (вместо базы данных)
+- `server/users.json` — пользователи (логин/пароль-хэш)
+- `server/tokens.json` — токены (Bearer)
 - `server/requirements.txt` — зависимости
 
 ## Запуск
@@ -25,6 +30,9 @@ uvicorn main:app --reload
 
 | Метод  | URL             | Описание            |
 | ------ | --------------- | -------------------- |
+| POST   | `/auth/register`| Регистрация          |
+| POST   | `/auth/login`   | Логин (возвращает токен) |
+| GET    | `/auth/me`      | Текущий пользователь |
 | GET    | `/tasks`        | Все задачи           |
 | GET    | `/tasks/{id}`   | Одна задача по id    |
 | POST   | `/tasks`        | Создать задачу       |
@@ -57,11 +65,36 @@ uvicorn main:app --reload
 
 ## Примеры запросов
 
+### Регистрация
+
+```bash
+curl -X POST http://127.0.0.1:8000/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "user_1",
+    "password": "1234"
+  }'
+```
+
+### Логин (получить токен)
+
+```bash
+curl -s -X POST http://127.0.0.1:8000/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "user_1",
+    "password": "1234"
+  }'
+```
+
+Скопируй `access_token` из ответа и используй его в запросах к `/tasks`.
+
 ### Создать задачу
 
 ```bash
 curl -X POST http://127.0.0.1:8000/tasks \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <access_token>" \
   -d '{
     "title": "Выучить FastAPI",
     "description": "Прочитать документацию",
@@ -75,6 +108,7 @@ curl -X POST http://127.0.0.1:8000/tasks \
 ```bash
 curl -X PUT http://127.0.0.1:8000/tasks/1 \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <access_token>" \
   -d '{
     "title": "Сделать домашку",
     "description": "Сверстать страницу профиля",
@@ -87,5 +121,6 @@ curl -X PUT http://127.0.0.1:8000/tasks/1 \
 ### Удалить задачу
 
 ```bash
-curl -X DELETE http://127.0.0.1:8000/tasks/1
+curl -X DELETE http://127.0.0.1:8000/tasks/1 \
+  -H "Authorization: Bearer <access_token>"
 ```
