@@ -4,8 +4,8 @@ body {
   align-items: start;
   min-height: 100vh;
   padding: 100px 30px;
-  font-family: 'Inter', sans-serif;
-  background-color:rgb(197, 169, 224);
+  font-family: Georgia, "Times New Roman", Times, serif;
+  background: linear-gradient(rgb(217, 110, 128), rgb(158, 118, 207));
 }
 
 input,

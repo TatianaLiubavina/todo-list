@@ -3,8 +3,9 @@
   flex-direction: column;
   row-gap: 24px;
   width: 100%;
-  max-width: 720px;
-  min-height: 429px;
+  min-width: 1500px;
+  max-width: 1920px;
+  min-height: 620px;
   padding: 24px;
   background-color: var(--color-white);
   border: var(--border);
@@ -13,10 +14,25 @@
 }
 
 .todo__title {
+  color: rgb(39, 26, 11);
   text-align: center;
-  font-size: 24px;
+  text-shadow: 2px 4px 4px #ae8bb1;
+  font-size: 42px;
   font-weight: 600;
   line-height: 1.2;
+}
+
+.todo__sections {
+  display: flex;
+  gap: 20px;
+}
+
+.todo__section1 {
+  margin: 15px;
+}
+
+.todo__section2 {
+  margin: 30px;
 }
 
 .todo__form {
@@ -26,7 +42,7 @@
 }
 
 .todo__form-div {
-  display: flex;
+  display: grid;
   gap: 10px;
 }
 
@@ -35,9 +51,8 @@
 }
 
 .todo__field-button {
-margin-top: 23px;
+  margin-top: 23px;
 }
-
 
 .todo__info {
   display: flex;
@@ -45,6 +60,7 @@ margin-top: 23px;
   align-items: center;
   column-gap: 16px;
   font-weight: 600;
+  margin: 20px 0px;
 }
 
 .todo__delete-all-button {

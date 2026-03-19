@@ -114,32 +114,40 @@ const Todo = () => {
   const clearSearchQuery = searchQuery.trim().toLowerCase();
   const filteredTasks =
     clearSearchQuery.length > 0
-      ? tasks.filter((task) => task.title.toLowerCase().includes(clearSearchQuery))
+      ? tasks.filter((task) =>
+          task.title.toLowerCase().includes(clearSearchQuery)
+        )
       : null;
 
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
-      <AddTaskForm
-        addTask={addTask}
-        newTask={newTask}
-        setNewTask={setNewTask}
-      />
-      <SearchTaskForm
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
-      <TodoInfo
-        total={tasks.length}
-        done={tasks.filter((task) => task.isDone).length}
-        onDeleteAllButtonClick={deleteAllTasks}
-      />
-      <TodoList
-        tasks={tasks}
-        filteredTasks={filteredTasks}
-        onDeleteTaskButtonClick={deleteTask}
-        onTaskCompleteChange={toggleTaskComplete}
-      />
+      <div className="todo__sections">
+        <div className="todo__section1">
+          <AddTaskForm
+            addTask={addTask}
+            newTask={newTask}
+            setNewTask={setNewTask}
+          />
+        </div>
+        <div className="todo__section2">
+          <SearchTaskForm
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <TodoInfo
+            total={tasks.length}
+            done={tasks.filter((task) => task.isDone).length}
+            onDeleteAllButtonClick={deleteAllTasks}
+          />
+          <TodoList
+            tasks={tasks}
+            filteredTasks={filteredTasks}
+            onDeleteTaskButtonClick={deleteTask}
+            onTaskCompleteChange={toggleTaskComplete}
+          />
+        </div>
+      </div>
     </div>
   );
 };
