@@ -9,7 +9,7 @@ import { tasksApi } from "../api/tasksApi";
 import type { Task, TaskCreateInput } from "../types/task";
 
 const Todo = () => {
-  const [tasks, setTasks] = useState<(Task & { isDone: boolean })[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [newTask, setNewTask] = useState<TaskCreateInput>({
@@ -30,11 +30,7 @@ const Todo = () => {
     setError("");
     try {
       const data = await tasksApi.getAll();
-      const tasksWithIsDone = data.map((task) => ({
-        ...task,
-        isDone: task.status === "done",
-      }));
-      setTasks(tasksWithIsDone);
+      setTasks(data);
     } catch (err: any) {
       setError(err.message || "Ошибка загрузки задач");
     } finally {
@@ -90,11 +86,11 @@ const Todo = () => {
     }
   };
 
-  const toggleTaskComplete = async (taskId: number, isDone: boolean) => {
+  const toggleTaskComplete = async (taskId: number, checked: boolean) => {
     const task = tasks.find((t) => t.id === taskId);
     if (!task) return;
     try {
-      const updatedStatus = isDone ? "done" : "todo";
+      const updatedStatus = checked ? "done" : "todo";
       await tasksApi.update(taskId, {
         title: task.title,
         description: task.description,
@@ -137,7 +133,7 @@ const Todo = () => {
           />
           <TodoInfo
             total={tasks.length}
-            done={tasks.filter((task) => task.isDone).length}
+            done={tasks.filter((task) => task.status === "done").length}
             onDeleteAllButtonClick={deleteAllTasks}
           />
           <TodoList

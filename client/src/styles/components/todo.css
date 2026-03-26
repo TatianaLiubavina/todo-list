@@ -4,7 +4,7 @@
   row-gap: 24px;
   width: 100%;
   min-width: 1500px;
-  max-width: 1920px;
+  max-width: 1700px;
   min-height: 620px;
   padding: 24px;
   background-color: var(--color-white);
@@ -78,6 +78,28 @@
   &:empty {
     display: none;
   }
+}
+
+.todo__list-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+
+.todo__list-header {
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px 200px 200px;
+  column-gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gray-4);
+  padding: 0 4px;
+}
+
+.todo__list-header-cell {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .todo__list {

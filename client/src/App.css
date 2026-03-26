@@ -1,0 +1,40 @@
+.authorization {
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 16px;
+}
+
+.authorization__title {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.authorization__error {
+  color: red;
+  margin-bottom: 16px;
+}
+
+.authorization__sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.log {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #3f3838;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+.registration {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #3f3838;
+  padding: 16px;
+  border-radius: 8px;
+}

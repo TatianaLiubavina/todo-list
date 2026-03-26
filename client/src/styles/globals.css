@@ -5,7 +5,7 @@ body {
   min-height: 100vh;
   padding: 100px 30px;
   font-family: Georgia, "Times New Roman", Times, serif;
-  background: linear-gradient(rgb(217, 110, 128), rgb(158, 118, 207));
+  background: linear-gradient(to right, rgb(217, 110, 128), rgb(158, 118, 207));
 }
 
 input,

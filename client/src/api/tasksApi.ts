@@ -2,6 +2,14 @@ import type { Task, TaskCreateInput, TaskUpdateInput } from "../types/task";
 
 const API_BASE_URL = "http://localhost:8000";
 
+const getToken = (): string | null => localStorage.getItem("access_token");
+
+const authHeaders = (): Record<string, string> => {
+  const token = getToken();
+  if (!token) return {};
+  return { Authorization: `Bearer ${token}` };
+};
+
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
@@ -15,12 +23,20 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 
 export const tasksApi = {
   getAll: async (): Promise<Task[]> => {
-    const response = await fetch(`${API_BASE_URL}/tasks`);
+    const response = await fetch(`${API_BASE_URL}/tasks`, {
+      headers: {
+        ...authHeaders(),
+      },
+    });
     return handleResponse<Task[]>(response);
   },
 
   getById: async (id: number): Promise<Task> => {
-    const response = await fetch(`${API_BASE_URL}/tasks/${id}`);
+    const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+      headers: {
+        ...authHeaders(),
+      },
+    });
     return handleResponse<Task>(response);
   },
 
@@ -29,6 +45,7 @@ export const tasksApi = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...authHeaders(),
       },
       body: JSON.stringify(taskData),
     });
@@ -40,6 +57,7 @@ export const tasksApi = {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        ...authHeaders(),
       },
       body: JSON.stringify(taskData),
     });
@@ -49,6 +67,9 @@ export const tasksApi = {
   delete: async (id: number): Promise<null> => {
     const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
       method: "DELETE",
+      headers: {
+        ...authHeaders(),
+      },
     });
     return handleResponse<null>(response);
   },

@@ -1,5 +1,29 @@
 import type { TaskPriority, TaskStatus } from "../types/task";
 
+const statusToRu: Record<TaskStatus, string> = {
+  todo: "Добавлена",
+  in_progress: "В процессе",
+  done: "Выполнена",
+};
+
+const priorityToRu: Record<TaskPriority, string> = {
+  low: "Низкая",
+  medium: "Средняя",
+  high: "Высокая",
+};
+
+const formatDate = (value: string | undefined): string => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}.${month}.${year}`;
+};
+
 interface TodoItemProps {
   className?: string;
   id: number;
@@ -9,9 +33,8 @@ interface TodoItemProps {
   priority: TaskPriority;
   deadline: string;
   created_at?: string;
-  isDone: boolean;
   onDeleteTaskButtonClick: (id: number) => void;
-  onTaskCompleteChange: (id: number, isDone: boolean) => void;
+  onTaskCompleteChange: (id: number, checked: boolean) => void;
 }
 
 const TodoItem = (props: TodoItemProps) => {
@@ -24,7 +47,6 @@ const TodoItem = (props: TodoItemProps) => {
     priority,
     deadline,
     created_at,
-    isDone,
     onDeleteTaskButtonClick,
     onTaskCompleteChange,
   } = props;
@@ -35,7 +57,7 @@ const TodoItem = (props: TodoItemProps) => {
         className="todo-item__checkbox"
         id={String(id)}
         type="checkbox"
-        checked={isDone}
+        checked={status === "done"}
         onChange={(event) => {
           onTaskCompleteChange(id, event.target.checked);
         }}
@@ -44,10 +66,12 @@ const TodoItem = (props: TodoItemProps) => {
         {title}
       </label>
       {description && <div className="todo-item__label">{description}</div>}
-      <div className="todo-item__label">{status}</div>
-      <div className="todo-item__label">{priority}</div>
-      <div className="todo-item__label">{deadline}</div>
-      {created_at && <div className="todo-item__label">{created_at}</div>}
+      <div className="todo-item__label">{statusToRu[status]}</div>
+      <div className="todo-item__label">{priorityToRu[priority]}</div>
+      <div className="todo-item__label">{formatDate(deadline)}</div>
+      {created_at && (
+        <div className="todo-item__label">{formatDate(created_at)}</div>
+      )}
       <button
         className="todo-item__delete-button"
         aria-label="Delete"

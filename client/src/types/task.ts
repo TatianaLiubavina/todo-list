@@ -10,8 +10,6 @@ export interface Task {
   priority: TaskPriority;
   deadline: string;
   created_at?: string;
-  // UI-only convenience flag (derived from status)
-  isDone?: boolean;
 }
 
 export type TaskCreateInput = Omit<Task, "id" | "created_at">;

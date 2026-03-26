@@ -18,3 +18,9 @@
     scale: 1.05;
   }
 }
+
+.exit {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16;
+}
