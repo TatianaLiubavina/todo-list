@@ -22,5 +22,5 @@
 .exit {
   display: flex;
   justify-content: flex-end;
-  padding: 16;
+  padding: 16px;
 }

@@ -111,7 +111,7 @@ const Todo = () => {
   const filteredTasks =
     clearSearchQuery.length > 0
       ? tasks.filter((task) =>
-          task.title.toLowerCase().includes(clearSearchQuery)
+          task.title.toLowerCase().includes(clearSearchQuery),
         )
       : null;
 

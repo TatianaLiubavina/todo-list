@@ -1,10 +1,11 @@
-import './normalize.css'
-import './fonts.css'
-import './variables.css'
-import './utils.css'
-import './globals.css'
+import "./normalize.css";
+import "./fonts.css";
+import "./variables.css";
+import "./utils.css";
+import "./globals.css";
 
-import './components/button.css'
-import './components/field.css'
-import './components/todo.css'
-import './components/todo-item.css'
+import "./components/authorization.css";
+import "./components/button.css";
+import "./components/field.css";
+import "./components/todo.css";
+import "./components/todo-item.css";
